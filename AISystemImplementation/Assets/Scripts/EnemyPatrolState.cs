@@ -6,10 +6,12 @@ public class EnemyPatrolState : EnemyBaseState
     private Transform pointB;        // Second patrol point
     float patrolSpeed = 2f;  // Speed of patrol movement
     private Transform targetPoint;  // The current target patrol point
+    private float waitTimer = 4f;
+    private bool isTimerActive;
 
     private Transform player;        // Reference to the player’s transform
-    private float sightRange = 60f;  // Range of sight
-    private float fieldOfViewAngle = 180f; // FOV of the enemy
+    private float sightRange = 20f;  // Range of sight
+    private float fieldOfViewAngle = 100f; // FOV of the enemy
 
     public override void EnterState(EnemyStateManager enemy)
     {
@@ -40,8 +42,28 @@ public class EnemyPatrolState : EnemyBaseState
         // If the enemy reaches the target point, switch to the other point
         if (Vector3.Distance(enemy.transform.position, targetPoint.position) < 0.1f)
         {
-            // Toggle between point A and point B
-            targetPoint = (targetPoint == pointA) ? pointB : pointA;
+            if (!isTimerActive)
+            {
+                // Start the timer countdown when the enemy is close enough
+                isTimerActive = true;
+                waitTimer = 4f; // Reset the timer to 4 seconds
+            }
+        }
+        // If the timer is active, start counting down
+        if (isTimerActive)
+        {
+            waitTimer -= Time.deltaTime; // Decrease timer by the time passed each frame
+
+            // When the timer reaches 0, switch the target point and reset the timer
+            if (waitTimer <= 0f)
+            {
+                // Toggle between point A and point B
+                targetPoint = (targetPoint == pointA) ? pointB : pointA;
+
+                // Reset timer and stop the countdown
+                isTimerActive = false;
+                waitTimer = 4f; // Reset timer value
+            }
         }
 
         // Vector from enemy to player
