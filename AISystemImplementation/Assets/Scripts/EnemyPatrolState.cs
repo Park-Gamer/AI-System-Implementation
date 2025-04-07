@@ -10,7 +10,7 @@ public class EnemyPatrolState : EnemyBaseState
     private bool isTimerActive;
 
     private Transform player;        // Reference to the player’s transform
-    private float sightRange = 20f;  // Range of sight
+    private float sightRange = 10f;  // Range of sight
     private float fieldOfViewAngle = 100f; // FOV of the enemy
 
     private GameObject light;
