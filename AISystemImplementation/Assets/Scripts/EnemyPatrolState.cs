@@ -13,9 +13,14 @@ public class EnemyPatrolState : EnemyBaseState
     private float sightRange = 20f;  // Range of sight
     private float fieldOfViewAngle = 100f; // FOV of the enemy
 
+    private GameObject light;
+    private Animator anim;
+
     public override void EnterState(EnemyStateManager enemy)
     {
-        Debug.Log("Patrol State");
+        light = GameObject.Find("EnemyLight");
+        anim = light.GetComponent<Animator>();
+        anim.SetBool("isPatrol", true);
 
         GameObject patrolSpotA = GameObject.Find("PatrolPointA");
         pointA = patrolSpotA.transform;
@@ -46,7 +51,7 @@ public class EnemyPatrolState : EnemyBaseState
             {
                 // Start the timer countdown when the enemy is close enough
                 isTimerActive = true;
-                waitTimer = 4f; // Reset the timer to 4 seconds
+                waitTimer = 3f; // Reset the timer to 4 seconds
             }
         }
         // If the timer is active, start counting down
@@ -83,6 +88,7 @@ public class EnemyPatrolState : EnemyBaseState
                     Debug.DrawRay(enemy.transform.position, directionToPlayer.normalized * hit.distance, Color.red);
                     if (hit.transform == player)
                     {
+                        anim.SetBool("isPatrol", false);
                         enemy.SwitchState(enemy.chaseState);
                     }
                 }

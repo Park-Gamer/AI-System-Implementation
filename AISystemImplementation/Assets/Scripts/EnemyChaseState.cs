@@ -2,9 +2,13 @@ using UnityEngine;
 
 public class EnemyChaseState : EnemyBaseState
 {
+    private GameObject light;
+    private Animator anim;
     public override void EnterState(EnemyStateManager enemy)
     {
-        Debug.Log("Chase State");
+        light = GameObject.Find("EnemyLight");
+        anim = light.GetComponent<Animator>();
+        anim.SetBool("isChase", true);
     }
 
     public override void UpdateState(EnemyStateManager enemy)
