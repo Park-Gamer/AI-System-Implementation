@@ -7,9 +7,9 @@ public class EnemyPatrolState : EnemyBaseState
     private Transform pointC;        // Third patrol point
     private Transform pointD;        // Forth patrol point
 
-    float patrolSpeed = 3f;  // Speed of patrol movement
+    float patrolSpeed = 3f;         // Speed of patrol movement
     private Transform targetPoint;  // The current target patrol point
-    private float waitTimer = 2f;
+    private float waitTimer = 2f;   // Time the guard waits
     private bool isTimerActive;
 
     private Transform player;        // Reference to the player’s transform
@@ -31,9 +31,9 @@ public class EnemyPatrolState : EnemyBaseState
         pointA = patrolSpotA.transform;
         GameObject patrolSpotB = GameObject.Find("PatrolPointB");
         pointB = patrolSpotB.transform;
-        GameObject patrolSpotC = GameObject.Find("PatrolPointC"); // New patrol point C
+        GameObject patrolSpotC = GameObject.Find("PatrolPointC"); 
         pointC = patrolSpotC.transform;
-        GameObject patrolSpotD = GameObject.Find("PatrolPointD"); // New patrol point D
+        GameObject patrolSpotD = GameObject.Find("PatrolPointD"); 
         pointD = patrolSpotD.transform;
         targetPoint = pointA;
 

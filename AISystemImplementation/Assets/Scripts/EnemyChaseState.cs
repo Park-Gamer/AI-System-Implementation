@@ -3,7 +3,7 @@ using UnityEngine;
 public class EnemyChaseState : EnemyBaseState
 {
     private Transform player;   // Reference to the player’s transform
-    float chaseSpeed = 4.5f;     // Speed of chase movement
+    float chaseSpeed = 4.5f;    // Speed of chase movement
 
     private GameObject light;
     private Animator anim;

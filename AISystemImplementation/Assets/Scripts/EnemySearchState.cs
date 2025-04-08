@@ -8,7 +8,6 @@ public class EnemySearchState : EnemyBaseState
     private float searchSpeed = 3f; // Speed at which the enemy moves during the search
     private float rotationSpeed = 100f; // Speed of rotation when checking for the player
     private float raycastDistance = 10f; // Distance of the raycast check
-    private LayerMask playerLayer; // The layer mask to detect the player
     private float searchTimeout = 10f; // Timeout before giving up the search
     private Vector3 lastKnownPosition; // The last known position of the player
     private float searchTimer = 0f; // Timer to check when to stop searching
