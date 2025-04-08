@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -9,9 +7,12 @@ public class PlayerController : MonoBehaviour
     public float rotationSpeed = 200f;
     private Rigidbody rb;  // Rigidbody of the player
 
+    private GameObject enemy;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();  // Get the Rigidbody component attached to the player
+        enemy = GameObject.Find("Enemy");
     }
 
     private void Update()
@@ -34,6 +35,11 @@ public class PlayerController : MonoBehaviour
         Vector3 moveDirection = new Vector3(move.x, 0f, move.y).normalized;
         // Move the player
         MovePlayer(moveDirection);
+
+        if (Vector3.Distance(enemy.transform.position, transform.position) < 1f)
+        {
+            SceneManager.LoadScene("SampleScene");
+        }
     }
 
     void MovePlayer(Vector3 direction)

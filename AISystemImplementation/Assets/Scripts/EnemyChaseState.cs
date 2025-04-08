@@ -3,7 +3,7 @@ using UnityEngine;
 public class EnemyChaseState : EnemyBaseState
 {
     private Transform player;   // Reference to the player’s transform
-    float chaseSpeed = 4.2f;     // Speed of chase movement
+    float chaseSpeed = 4.5f;     // Speed of chase movement
 
     private GameObject light;
     private Animator anim;
@@ -28,15 +28,30 @@ public class EnemyChaseState : EnemyBaseState
             enemy.transform.rotation = Quaternion.RotateTowards(enemy.transform.rotation, targetRotation, 200f * Time.deltaTime);
         }
 
-        // If the enemy reaches the player
-        if (Vector3.Distance(enemy.transform.position, player.position) < 1f)
+        // Vector from enemy to player
+        Vector3 directionToPlayer = player.position - enemy.transform.position;
+        // Check if the player is within the field of view angle
+        float angle = Vector3.Angle(directionToPlayer, enemy.transform.forward);
+        if (angle < 140f / 2)
         {
-            Debug.Log("Player Chaught!");
+            // Check if the player is within sight range
+            if (directionToPlayer.magnitude < 16f)
+            {
+                // Raycast to check if there is any obstacle between the enemy and the player
+                RaycastHit hit;
+                if (Physics.Raycast(enemy.transform.position, directionToPlayer.normalized, out hit, 16f))
+                {
+                    if (hit.transform == player)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        anim.SetBool("isChase", false);
+                        enemy.SwitchState(enemy.searchState);
+                    }
+                }
+            }
         }
-    }
-
-    public override void OnCollisionEnter(EnemyStateManager enemy)
-    {
-
     }
 }
